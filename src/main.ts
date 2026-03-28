@@ -82,7 +82,10 @@ let overviewActive = false;
 
 function buildOverview() {
   let container = document.getElementById("overview");
-  if (container) return container;
+  if (container) {
+    scaleOverviewThumbs(container);
+    return container;
+  }
   container = document.createElement("div");
   container.id = "overview";
   container.className = "overview";
@@ -117,7 +120,28 @@ function buildOverview() {
     });
     container.appendChild(thumb);
   });
+
+  scaleOverviewThumbs(container);
   return container;
+}
+
+// Set overview-inner to fixed viewport dimensions and scale to fit thumb
+function scaleOverviewThumbs(container: HTMLElement) {
+  const vw = window.innerWidth;
+  const vh = window.innerHeight;
+  const thumbs = container.querySelectorAll<HTMLElement>(".overview-thumb");
+  if (thumbs.length === 0) return;
+  // Need a rAF so thumbs have layout
+  requestAnimationFrame(() => {
+    const thumbW = thumbs[0].clientWidth;
+    if (thumbW === 0) return;
+    const scale = thumbW / vw;
+    container.querySelectorAll<HTMLElement>(".overview-inner").forEach((inner) => {
+      inner.style.width = vw + "px";
+      inner.style.height = vh + "px";
+      inner.style.transform = `scale(${scale})`;
+    });
+  });
 }
 
 function toggleOverview(show?: boolean) {
