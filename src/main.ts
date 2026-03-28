@@ -461,15 +461,16 @@ function setupAiTasteToggle() {
     if (!frame || !iframe) return;
     const isMobile = window.innerWidth <= 768;
     if (isMobile) {
-      const desktopW = 800;
-      const desktopH = 800;
+      // Portrait ratio for mobile: render at phone-like width, taller height
+      const refW = 430;
+      const refH = 750;
       const availW = window.innerWidth;
-      const scale = availW / desktopW;
-      iframe.style.width = desktopW + "px";
-      iframe.style.height = desktopH + "px";
+      const scale = availW / refW;
+      iframe.style.width = refW + "px";
+      iframe.style.height = refH + "px";
       iframe.style.transform = `scale(${scale})`;
       iframe.style.transformOrigin = "top left";
-      frame.style.height = Math.round(desktopH * scale) + "px";
+      frame.style.height = Math.round(refH * scale) + "px";
       frame.style.overflow = "hidden";
     } else {
       iframe.style.width = "";
