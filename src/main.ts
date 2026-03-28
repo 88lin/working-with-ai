@@ -461,8 +461,8 @@ function setupAiTasteToggle() {
     if (!frame || !iframe) return;
     const isMobile = window.innerWidth <= 768;
     if (isMobile) {
-      const desktopW = 1000;
-      const desktopH = 600;
+      const desktopW = 800;
+      const desktopH = 800;
       const availW = window.innerWidth;
       const scale = availW / desktopW;
       iframe.style.width = desktopW + "px";
