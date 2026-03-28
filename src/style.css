@@ -288,7 +288,7 @@ input[type="range"]::-webkit-slider-thumb { -webkit-appearance:none; width:16px;
 .overview-thumb { position:relative; aspect-ratio:16/10; border:2px solid var(--card-border); border-radius:8px; overflow:hidden; cursor:pointer; transition:border-color .2s, transform .2s; background:var(--bg); }
 .overview-thumb:hover { border-color:var(--accent); transform:scale(1.03); }
 .overview-thumb.current { border-color:var(--accent2); box-shadow:0 0 12px rgba(239,106,154,0.3); }
-.overview-inner { transform-origin:top left; pointer-events:none; overflow:hidden; padding:3rem 5rem; display:flex; flex-direction:column; align-items:center; justify-content:center; }
+.overview-inner { position:absolute; top:0; left:0; transform-origin:top left; pointer-events:none; overflow:hidden; padding:3rem 5rem; display:flex; flex-direction:column; align-items:center; justify-content:center; }
 .overview-label { position:absolute; bottom:4px; right:6px; font-family:var(--font-mono); font-size:.65rem; color:var(--dim); background:rgba(10,10,15,0.7); padding:1px 5px; border-radius:3px; }
 body.overview-active #progress,
 body.overview-active #slide-counter,
