@@ -160,13 +160,17 @@ function updateHash() {
   history.replaceState(null, "", `#${hash}`);
 }
 
+// Parse hash: #5 = slide 5 initial, #5.3 = slide 5 fragment 3, #5. = slide 5 all fragments
 function parseHash(): { slide: number; fragment: number } | null {
   const h = location.hash.replace("#", "");
   if (!h) return null;
   const parts = h.split(".");
   const slide = parseInt(parts[0], 10) - 1; // 1-indexed → 0-indexed
-  const fragment = parts[1] ? parseInt(parts[1], 10) : 0;
   if (isNaN(slide) || slide < 0 || slide >= slides.length) return null;
+  // "5." (trailing dot, empty after dot) means all fragments
+  const fragment = parts.length > 1 && parts[1] === ""
+    ? maxFragment(slide)
+    : parts[1] ? parseInt(parts[1], 10) : 0;
   return { slide, fragment };
 }
 
