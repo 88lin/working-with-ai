@@ -472,7 +472,7 @@ MIT
 </p>
 
 <p align="center">
-  中文 | <a href="#-chinese-version">English</a>
+  <a href="#-chinese-version">中文</a> | English
 </p>
 
 ---
