@@ -92,6 +92,7 @@ function showFragmentsUpTo(slideIdx: number, n: number) {
     el.classList.toggle("f-visible", visibleVals.has(Number(el.dataset.f)));
   });
   fragmentState.set(slideIdx, n);
+  if (slideIdx === current) updateHash();
 }
 
 function goto(index: number, direction?: "forward" | "backward") {
@@ -146,6 +147,43 @@ function updateProgress() {
   if (bar) bar.style.width = `${((current + 1) / slides.length) * 100}%`;
   const counter = document.getElementById("slide-counter");
   if (counter) counter.textContent = `${current + 1} / ${slides.length}`;
+  updateHash();
+}
+
+// ============================================================
+// Hash navigation: #slide or #slide.fragment (1-indexed)
+// ============================================================
+
+function updateHash() {
+  const frag = currentFragment(current);
+  const hash = frag > 0 ? `${current + 1}.${frag}` : `${current + 1}`;
+  history.replaceState(null, "", `#${hash}`);
+}
+
+function parseHash(): { slide: number; fragment: number } | null {
+  const h = location.hash.replace("#", "");
+  if (!h) return null;
+  const parts = h.split(".");
+  const slide = parseInt(parts[0], 10) - 1; // 1-indexed → 0-indexed
+  const fragment = parts[1] ? parseInt(parts[1], 10) : 0;
+  if (isNaN(slide) || slide < 0 || slide >= slides.length) return null;
+  return { slide, fragment };
+}
+
+function applyHash() {
+  const target = parseHash();
+  if (!target) return false;
+  // Directly activate the target slide without transition
+  slides[current].classList.remove("active");
+  slides[target.slide].classList.add("active");
+  current = target.slide;
+  const frag = Math.min(target.fragment, maxFragment(current));
+  showFragmentsUpTo(current, frag);
+  const bar = document.getElementById("progress-bar") as HTMLElement | null;
+  if (bar) bar.style.width = `${((current + 1) / slides.length) * 100}%`;
+  const counter = document.getElementById("slide-counter");
+  if (counter) counter.textContent = `${current + 1} / ${slides.length}`;
+  return true;
 }
 
 // ============================================================
@@ -520,10 +558,17 @@ function setupAiTasteToggle() {
 
 if (slides.length > 0) {
   slides[0].classList.add("active");
-  // Show all fragments on first slide by default (it's the title)
-  showFragmentsUpTo(0, maxFragment(0));
+  // Apply hash navigation or default to first slide
+  if (!applyHash()) {
+    showFragmentsUpTo(0, maxFragment(0));
+  }
 }
 updateProgress();
+
+// Handle browser back/forward
+window.addEventListener("hashchange", () => {
+  applyHash();
+});
 setupJpegDemo();
 setupEmojiQuiz();
 setupAiTasteToggle();
