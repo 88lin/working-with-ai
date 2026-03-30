@@ -226,10 +226,11 @@ function buildOverview() {
     // Label — extract slide title text for mobile
     const label = document.createElement("div");
     label.className = "overview-label";
+    const titleOverride = slide.dataset.title;
     const titleEl =
       slide.querySelector(".title-mega") ||
       slide.querySelector(".title-large");
-    const titleText = titleEl ? titleEl.textContent?.trim() ?? "" : "";
+    const titleText = titleOverride ?? (titleEl ? titleEl.textContent?.trim() ?? "" : "");
     label.textContent = titleText
       ? `${i + 1}. ${titleText}`
       : `${i + 1}`;
