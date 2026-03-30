@@ -212,7 +212,7 @@ input[type="range"] { -webkit-appearance:none; width:230px; height:4px; border-r
 input[type="range"]::-webkit-slider-thumb { -webkit-appearance:none; width:16px; height:16px; border-radius:50%; background:white; cursor:pointer; box-shadow:0 0 6px rgba(124,106,239,0.5); }
 
 /* Emoji quiz */
-.emoji-display { font-size:clamp(2.5rem,7vw,4.5rem); letter-spacing:.08em; min-height:1.3em; }
+.emoji-display { font-size:clamp(2.5rem,7vw,4.5rem); letter-spacing:.08em; min-height:1.3em; text-wrap:balance; }
 .emoji-answer { font-size:1.2rem; font-weight:700; color:var(--dim); transition:all .3s; min-height:1.3em; text-align:center; }
 .emoji-answer.revealed { color:var(--accent3); }
 .quiz-btn { font-family:var(--font-sans); font-size:.85rem; padding:.4em 1em; border:1px solid var(--accent); background:rgba(124,106,239,0.1); color:var(--accent); border-radius:8px; cursor:pointer; transition:all .2s; }
