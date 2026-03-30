@@ -477,7 +477,6 @@ MIT
   中文 | <a href="#-chinese-version">English</a>
 </p>
 
----
 
 ## 📖 About
 
