@@ -1,6 +1,59 @@
 import "./style.css";
 
 // ============================================================
+// i18n
+// ============================================================
+
+const lang = document.documentElement.lang === "en" ? "en" : "zh";
+
+const i18n = {
+  zh: {
+    stops: [
+      [5, "📱 小模型 — 能聊，但经常离谱"] as [number, string],
+      [20, "💻 中等模型 — 基本可用"] as [number, string],
+      [45, "🖥️ 大模型 — 相当靠谱"] as [number, string],
+      [65, "🧠 Claude-class"] as [number, string],
+      [85, "🏆 Frontier — 接近无损"] as [number, string],
+      [100, "🌌 人脑（理论上限）"] as [number, string],
+    ],
+    movies: [
+      { emoji: "🏙️💤🔄🌀🏨🎯🔫💼🧊🌊🏔️🔑🎲🕰️🪞🚂🌉👤🎭⏱️🏗️💉", answer: "盗梦空间 Inception" },
+      { emoji: "👨‍🚀🌽🕳️📚⏰👨‍👧🌊🪐🚀🏠📻🌌🤖💧🧊🕰️👴📊🛰️🌑🔭⏳", answer: "星际穿越 Interstellar" },
+      { emoji: "🎸💀🌺🇲🇽👦🐕🌉🎶💜🦴🎭👴📸🌮🎺🕯️👻🌼🎪🦋💛🌅", answer: "寻梦环游记 Coco" },
+      { emoji: "☄️🏙️🏔️👧👦🔄💫🎀📱✨🌅💧🕐🗾🎐🧵🌸💕🚃🔔🌌🪢", answer: "你的名字 Your Name" },
+      { emoji: "🦑🎮👔💸🔴🟢🪆🍬📐🔫🦺🛏️🪜🎭💀⭕🔺🟥💉🌉🏆💰", answer: "鱿鱼游戏 Squid Game" },
+      { emoji: "🦇🃏🏙️💣🔥🚔🏥💰🎭🪙🤡🚗💀🏢🗡️⚖️🌃🦸‍♂️🚁📞🎪🌑", answer: "蝙蝠侠：黑暗骑士 The Dark Knight" },
+    ],
+    quizPrompt: "我们来玩 emoji 猜影视作品。规则：1. 你只能用 emoji 输出，不能用文字，除非我说放弃当前题目。2. 每部作品用 22 个 emoji 表达一个经典桥段。3. 我猜对了自动下一题，猜错了给提示。选择要跳跃一点。",
+    copied: "已复制 ✓",
+    copyPrompt: "复制 Prompt",
+  },
+  en: {
+    stops: [
+      [5, "📱 Small model — can chat, often wrong"] as [number, string],
+      [20, "💻 Mid-size model — mostly usable"] as [number, string],
+      [45, "🖥️ Large model — quite reliable"] as [number, string],
+      [65, "🧠 Claude-class"] as [number, string],
+      [85, "🏆 Frontier — near lossless"] as [number, string],
+      [100, "🌌 Human brain (theoretical ceiling)"] as [number, string],
+    ],
+    movies: [
+      { emoji: "🏙️💤🔄🌀🏨🎯🔫💼🧊🌊🏔️🔑🎲🕰️🪞🚂🌉👤🎭⏱️🏗️💉", answer: "Inception" },
+      { emoji: "👨‍🚀🌽🕳️📚⏰👨‍👧🌊🪐🚀🏠📻🌌🤖💧🧊🕰️👴📊🛰️🌑🔭⏳", answer: "Interstellar" },
+      { emoji: "🎸💀🌺🇲🇽👦🐕🌉🎶💜🦴🎭👴📸🌮🎺🕯️👻🌼🎪🦋💛🌅", answer: "Coco" },
+      { emoji: "☄️🏙️🏔️👧👦🔄💫🎀📱✨🌅💧🕐🗾🎐🧵🌸💕🚃🔔🌌🪢", answer: "Your Name (君の名は)" },
+      { emoji: "🦑🎮👔💸🔴🟢🪆🍬📐🔫🦺🛏️🪜🎭💀⭕🔺🟥💉🌉🏆💰", answer: "Squid Game" },
+      { emoji: "🦇🃏🏙️💣🔥🚔🏥💰🎭🪙🤡🚗💀🏢🗡️⚖️🌃🦸‍♂️🚁📞🎪🌑", answer: "The Dark Knight" },
+    ],
+    quizPrompt: "Let's play emoji movie guessing! Rules: 1. You can only output emoji, no text, unless I give up. 2. Use 22 emoji per movie depicting an iconic scene. 3. Auto next if I guess right, give hints if wrong. Be creative with your choices.",
+    copied: "Copied ✓",
+    copyPrompt: "Copy Prompt",
+  },
+};
+
+const t = i18n[lang];
+
+// ============================================================
 // Slide engine with fragment support
 // ============================================================
 
@@ -323,14 +376,7 @@ function setupJpegDemo() {
     });
   }
 
-  const stops: [number, string][] = [
-    [5, "📱 小模型 — 能聊，但经常离谱"],
-    [20, "💻 中等模型 — 基本可用"],
-    [45, "🖥️ 大模型 — 相当靠谱"],
-    [65, "🧠 Claude-class"],
-    [85, "🏆 Frontier — 接近无损"],
-    [100, "🌌 人脑（理论上限）"],
-  ];
+  const stops = t.stops;
 
   function updateLabel(v: number) {
     if (label) {
@@ -364,37 +410,9 @@ function setupJpegDemo() {
 // Emoji quiz (影视作品)
 // ============================================================
 
-const movies = [
-  {
-    emoji: "🏙️💤🔄🌀🏨🎯🔫💼🧊🌊🏔️🔑🎲🕰️🪞🚂🌉👤🎭⏱️🏗️💉",
-    answer: "盗梦空间 Inception",
-  },
-  {
-    emoji: "👨‍🚀🌽🕳️📚⏰👨‍👧🌊🪐🚀🏠📻🌌🤖💧🧊🕰️👴📊🛰️🌑🔭⏳",
-    answer: "星际穿越 Interstellar",
-  },
-  {
-    emoji: "🎸💀🌺🇲🇽👦🐕🌉🎶💜🦴🎭👴📸🌮🎺🕯️👻🌼🎪🦋💛🌅",
-    answer: "寻梦环游记 Coco",
-  },
-  {
-    emoji: "☄️🏙️🏔️👧👦🔄💫🎀📱✨🌅💧🕐🗾🎐🧵🌸💕🚃🔔🌌🪢",
-    answer: "你的名字 Your Name",
-  },
-  {
-    emoji: "🦑🎮👔💸🔴🟢🪆🍬📐🔫🦺🛏️🪜🎭💀⭕🔺🟥💉🌉🏆💰",
-    answer: "鱿鱼游戏 Squid Game",
-  },
-  {
-    emoji: "🦇🃏🏙️💣🔥🚔🏥💰🎭🪙🤡🚗💀🏢🗡️⚖️🌃🦸‍♂️🚁📞🎪🌑",
-    answer: "蝙蝠侠：黑暗骑士 The Dark Knight",
-  },
-];
-
+const movies = t.movies;
 let mIdx = 0;
-
-const QUIZ_PROMPT =
-  "我们来玩 emoji 猜影视作品。规则：1. 你只能用 emoji 输出，不能用文字，除非我说放弃当前题目。2. 每部作品用 22 个 emoji 表达一个经典桥段。3. 我猜对了自动下一题，猜错了给提示。选择要跳跃一点。";
+const QUIZ_PROMPT = t.quizPrompt;
 
 function setupEmojiQuiz() {
   const display = document.getElementById("emoji-display");
@@ -438,9 +456,9 @@ function setupEmojiQuiz() {
   document.getElementById("copy-prompt")?.addEventListener("click", () => {
     navigator.clipboard.writeText(QUIZ_PROMPT).then(() => {
       const btn = document.getElementById("copy-prompt")!;
-      btn.textContent = "已复制 ✓";
+      btn.textContent = t.copied;
       setTimeout(() => {
-        btn.textContent = "复制 Prompt";
+        btn.textContent = t.copyPrompt;
       }, 2000);
     });
   });
