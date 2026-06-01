@@ -13,6 +13,14 @@
       "matchUpdateTypes": ["minor"],
       "groupName": "minor updates",
       "groupSlug": "minor"
+    },
+    {
+      "matchDepTypes": ["dependencies", "devDependencies"],
+      "rangeStrategy": "bump"
+    },
+    {
+      "matchDepTypes": ["peerDependencies"],
+      "rangeStrategy": "widen"
     }
   ]
 }
