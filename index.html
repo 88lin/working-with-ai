@@ -108,8 +108,8 @@
       </section>
 
       <!-- ============================== 3. knowledge.jpeg ============================== -->
-      <section class="slide">
-        <div class="text-center flex-col gap-3" style="align-items:center">
+      <section class="slide jpeg-slide">
+        <div class="jpeg-content text-center flex-col">
           <div class="file-name">knowledge.jpeg</div>
 
           <div class="subtitle cn" data-f="1" style="max-width:650px">
@@ -117,7 +117,7 @@
             模型越小，丢失越多 — 你看到的“幻觉”其实是压缩损失
           </div>
 
-          <div class="compression-levels mt-3" data-f="2">
+          <div class="compression-levels" data-f="2">
             <div class="comp-row"><span class="comp-format">RAW</span><div class="comp-bar" style="width:100%;background:var(--accent3)"></div><span class="comp-desc cn">人脑 / 全部知识</span></div>
             <div class="comp-row"><span class="comp-format">PNG</span><div class="comp-bar" style="width:70%;background:var(--accent)"></div><span class="comp-desc cn">Wikipedia · 教科书 · 文档</span></div>
             <div class="comp-row current"><span class="comp-format">JPEG</span><div class="comp-bar" style="width:40%;background:var(--accent2)"></div><span class="comp-desc cn">LLM — 实用，但有损失</span></div>
@@ -125,14 +125,14 @@
 
           <div class="jpeg-demo-overlay" data-f="3">
             <div class="jpeg-demo">
-              <canvas id="jpeg-canvas"></canvas>
+              <canvas id="jpeg-canvas" width="600" height="400"></canvas>
               <div class="jpeg-slider-wrap">
                 <div class="mono dim" style="font-size:0.8rem">拖动 → 模拟不同模型的“压缩率”</div>
                 <input type="range" id="jpeg-slider" min="1" max="100" value="50">
                 <div id="jpeg-quality-label" class="mono accent jpeg-label-fixed">Quality:&nbsp;50% — 🧠 Claude-class</div>
               </div>
             </div>
-            <div class="cn dim text-center mt-2" style="max-width:500px;font-size:0.88rem">
+            <div class="cn dim text-center" style="max-width:500px;font-size:0.88rem">
               幻觉不是 bug — 是压缩率的代价<br>
               <span class="accent">模型越大，精度越高</span>
             </div>
