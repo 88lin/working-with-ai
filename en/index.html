@@ -108,8 +108,8 @@
       </section>
 
       <!-- ============================== 3. knowledge.jpeg ============================== -->
-      <section class="slide">
-        <div class="text-center flex-col gap-3" style="align-items:center">
+      <section class="slide jpeg-slide">
+        <div class="jpeg-content text-center flex-col">
           <div class="file-name">knowledge.jpeg</div>
 
           <div class="subtitle" data-f="1" style="max-width:650px">
@@ -117,7 +117,7 @@
             Smaller models lose more — “hallucinations” are really compression artifacts
           </div>
 
-          <div class="compression-levels mt-3" data-f="2">
+          <div class="compression-levels" data-f="2">
             <div class="comp-row"><span class="comp-format">RAW</span><div class="comp-bar" style="width:100%;background:var(--accent3)"></div><span class="comp-desc">Human brain / all knowledge</span></div>
             <div class="comp-row"><span class="comp-format">PNG</span><div class="comp-bar" style="width:70%;background:var(--accent)"></div><span class="comp-desc">Wikipedia · textbooks · docs</span></div>
             <div class="comp-row current"><span class="comp-format">JPEG</span><div class="comp-bar" style="width:40%;background:var(--accent2)"></div><span class="comp-desc">LLM — practical, but lossy</span></div>
@@ -125,14 +125,14 @@
 
           <div class="jpeg-demo-overlay" data-f="3">
             <div class="jpeg-demo">
-              <canvas id="jpeg-canvas"></canvas>
+              <canvas id="jpeg-canvas" width="600" height="400"></canvas>
               <div class="jpeg-slider-wrap">
                 <div class="mono dim" style="font-size:0.8rem">Drag → simulate different model “compression rates”</div>
                 <input type="range" id="jpeg-slider" min="1" max="100" value="50">
                 <div id="jpeg-quality-label" class="mono accent jpeg-label-fixed">Quality:&nbsp;50% — 🧠 Claude-class</div>
               </div>
             </div>
-            <div class="dim text-center mt-2" style="max-width:500px;font-size:0.88rem">
+            <div class="dim text-center" style="max-width:500px;font-size:0.88rem">
               Hallucinations aren't bugs — they're the cost of compression<br>
               <span class="accent">Larger models, higher fidelity</span>
             </div>
